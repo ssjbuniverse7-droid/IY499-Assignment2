@@ -7,7 +7,16 @@ def get_user_data():
     hi = 0
 
 def read_data():
-    hi = 0
+    # Step 1: Read The CSV File To A Pandas DataFrame
+    df = pd.read_csv("Numerical_Output.csv")
+
+    # Step 2: Display The Data To Verify
+    print("Data From CSV File: ")
+    print(df)
+
+    # Step 3: Perform Operations On The Numercial Data (Optional)
+    print("\nData Statistics; ")
+    print(df.describe()) # Provides Descriptive Statistics For Numerical Columns
 
 def compute_statistics(data, grouped_df, frequency, midpoints):
     hi = 0
