@@ -1,10 +1,23 @@
+'''
+Practical
+Name: Chinkhuslen Khishignemekh
+
+'''
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import statistics
 
 def get_user_data():
-    hi = 0
+    # Step 1: Numerical Data In A List
+    data = []
+
+    # Step 2: Create A Pandas DataFrame With Appropriate Column Names
+    df = pd.DataFrame(data, columns=["ID", "Weight", "Age"])
+
+    # Step 3: Save The DataFrame To A CSV File
+    df.to_csv("Numerical_Output.csv", index= False)
 
 def read_data():
     # Step 1: Read The CSV File To A Pandas DataFrame
