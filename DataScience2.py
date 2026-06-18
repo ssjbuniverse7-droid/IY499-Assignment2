@@ -12,14 +12,13 @@ import statistics
 def get_data():
     # Step 1: Collect Numerical Data In A List
     data = []
-
-    if len(data) == 0:
-        print("No data available.")
-
+    colName = input("Enter Column Name For The Data. --> ")
     while True:
-        user = input("Enter A Number Or 'Exit' To Exit. --> ")
 
-        if user.lower() == "exit":
+        user = input("Enter A Number Or 'Done' To Finish. --> ")
+
+
+        if user.lower() == "done":
             break
 
         try:
@@ -28,12 +27,15 @@ def get_data():
             print("Invalid Input, Try Again.")
 
     # Step 2: Create A Pandas DataFrame With Appropriate Column Name
-    df = pd.DataFrame(data, columns=["Number"])
+    df = pd.DataFrame(data, columns=[colName])
 
     # Step 3: Save The DataFrame To A CSV File
     df.to_csv("Numerical_Output.csv", index=False)
 
-    print("Data saved to 'Numerical_Output.csv'.")
+    if len(data) == 0:
+        print("No data entered.")
+    else:
+        print("Data saved to 'Numerical_Output.csv'.")
 
 def read_data():
     # Step 1: Read The CSV File To A Pandas DataFrame
@@ -47,7 +49,7 @@ def read_data():
     print("\nData Statistics; ")
     print(df.describe()) # Provides Descriptive Statistics For Numerical Columns
 
-    return df["Number"].tolist()
+    return df.iloc[:, 0].tolist()  # Return the first column as a list
 
 def group_data(data, class_width):
     if len(data) == 0:
@@ -103,15 +105,20 @@ def Main():
     grouped_df = None
     stats_df = None
 
+    print("\n***** Data Science Program *****")
+
     while True:
-        print("\nMenu")
-        print("1 - Get User Data And Write To File")
+        print("\n-----------------------------------------")
+        print("Welcome To The Main Menu!")
+        print("-----------------------------------------")
+        print("1 - Enter Data And Write To A File")
         print("2 - Read Data From A File")
-        print("3 - Draw Histogram By Getting Class Width")
+        print("3 - Draw Histogram")
         print("4 - Show Statistics")
         print("5 - Save To CSV File")
         print("0 - Exit")
-        choice = input("Enter Your Choice: ")
+        print("-----------------------------------------")
+        choice = input("Enter Your Choice: \n")
 
         if choice == "1":
             get_data()
@@ -153,7 +160,7 @@ def Main():
             break
 
         else:
-            print("Invalid Input, Please Try Again")
+            print("Invalid Input, Please Try Again.")
 
 # Run Main Method
 Main()
