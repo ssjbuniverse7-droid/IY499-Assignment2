@@ -9,15 +9,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 import statistics
 
-def get_user_data():
-    # Step 1: Numerical Data In A List
+def get_data():
+    # Step 1: Collect Numerical Data In A List
     data = []
 
-    # Step 2: Create A Pandas DataFrame With Appropriate Column Names
-    df = pd.DataFrame(data, columns=["ID", "Weight", "Age"])
+    if len(data) == 0:
+        print("No data available.")
+
+    while True:
+        user = input("Enter A Number Or 'Exit' To Exit. --> ")
+
+        if user.lower() == "exit":
+            break
+
+        try:
+            data.append(float(user))
+        except ValueError:
+            print("Invalid Input, Try Again.")
+
+    # Step 2: Create A Pandas DataFrame With Appropriate Column Name
+    df = pd.DataFrame(data, columns=["Number"])
 
     # Step 3: Save The DataFrame To A CSV File
-    df.to_csv("Numerical_Output.csv", index= False)
+    df.to_csv("Numerical_Output.csv", index=False)
+
+    print("Data saved to 'Numerical_Output.csv'.")
 
 def read_data():
     # Step 1: Read The CSV File To A Pandas DataFrame
@@ -31,23 +47,14 @@ def read_data():
     print("\nData Statistics; ")
     print(df.describe()) # Provides Descriptive Statistics For Numerical Columns
 
-def compute_statistics(data, grouped_df, frequency, midpoints):
-    mean = np.mean(data)
-    median = np.median(data)
-    mode = statistics.mode(data)
-    variance = np.var(data)
-    std_dev = np.std(data)
-
-    stats_df = pd.DataFrame({
-        'Statistic': ['Mean', 'Median', 'Mode', 'Variance', 'Standard Deviation'],
-        'Value': [mean, median, mode, variance, std_dev]
-    })
-
-    return stats_df
+    return df["Number"].tolist()
 
 def group_data(data, class_width):
+    if len(data) == 0:
+        print("No data available.")
+
     min_val, max_val = min(data), max(data)
-    bins = np.arange(min_val, max_val + class_width, class_width)
+    bins = np.arange(min_val, max_val + class_width + 1, class_width)
     frequency, bin_edges = np.histogram(data, bins=bins)
     
     midpoints = [(bin_edges[i] + bin_edges[i+1]) / 2 for i in range(len(bin_edges)-1)]
@@ -62,6 +69,20 @@ def group_data(data, class_width):
     
     return grouped_df, frequency, midpoints
 
+def compute_statistics(data, grouped_df, frequency, midpoints):
+    mean = np.mean(data)
+    median = np.median(data)
+    mode = statistics.multimode(data)
+    variance = np.var(data)
+    std_dev = np.std(data)
+
+    stats_df = pd.DataFrame({
+        'Statistic': ['Mean', 'Median', 'Mode', 'Variance', 'Standard Deviation'],
+        'Value': [mean, median, mode, variance, std_dev]
+    })
+
+    return stats_df
+
 def draw_histogram(grouped_df, class_width):
     plt.bar(
         grouped_df['Midpoint'], 
@@ -75,9 +96,6 @@ def draw_histogram(grouped_df, class_width):
     plt.ylabel("Frequency")
     plt.title("Histogram of Grouped Data")
     plt.show()
-    
-groupedDate, frequency, midpoint = group_data(get_user_data(), 5)   
-draw_histogram(groupedDate, 5)
 
 # Main Method
 def Main():
@@ -96,11 +114,11 @@ def Main():
         choice = input("Enter Your Choice: ")
 
         if choice == "1":
-            get_user_data()
+            get_data()
 
         elif choice == "2":
             data = read_data()
-            print("Data Loaded From File")
+            print("Data Loaded Successfully.")
 
         elif choice == "3":
             if not data:
@@ -109,7 +127,7 @@ def Main():
 
             class_width = float(input("Enter Class Width: "))
             grouped_df, frequency, midpoints = group_data(data, class_width)
-            draw_histogram(grouped_df)
+            draw_histogram(grouped_df, class_width)
 
         elif choice == "4":
             if grouped_df is None:
@@ -138,5 +156,4 @@ def Main():
             print("Invalid Input, Please Try Again")
 
 # Run Main Method
-if __name__ == "__Main__":
-    Main()
+Main()
