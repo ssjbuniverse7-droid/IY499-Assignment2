@@ -1,5 +1,5 @@
 '''
-Practical
+Practical Programming Assignment
 Name: Chinkhuslen Khishignemekh
 
 '''
@@ -32,13 +32,52 @@ def read_data():
     print(df.describe()) # Provides Descriptive Statistics For Numerical Columns
 
 def compute_statistics(data, grouped_df, frequency, midpoints):
-    hi = 0
+    mean = np.mean(data)
+    median = np.median(data)
+    mode = statistics.mode(data)
+    variance = np.var(data)
+    std_dev = np.std(data)
 
-def draw_histogram(grouped_df):
-    hi = 0
+    stats_df = pd.DataFrame({
+        'Statistic': ['Mean', 'Median', 'Mode', 'Variance', 'Standard Deviation'],
+        'Value': [mean, median, mode, variance, std_dev]
+    })
+
+    return stats_df
 
 def group_data(data, class_width):
-    hi = 0
+    min_val, max_val = min(data), max(data)
+    bins = np.arange(min_val, max_val + class_width, class_width)
+    frequency, bin_edges = np.histogram(data, bins=bins)
+    
+    midpoints = [(bin_edges[i] + bin_edges[i+1]) / 2 for i in range(len(bin_edges)-1)]
+    freq_times_mid = [frequency[i] * midpoints[i] for i in range(len(frequency))]
+    
+    grouped_df = pd.DataFrame({
+        'Classes': [f'{bin_edges[i]} - {bin_edges[i+1]}' for i in range(len(bin_edges)-1)],
+        'Frequency': frequency,
+        'Midpoint': midpoints,
+        'Freq * Mid': freq_times_mid
+    })
+    
+    return grouped_df, frequency, midpoints
+
+def draw_histogram(grouped_df, class_width):
+    plt.bar(
+        grouped_df['Midpoint'], 
+        grouped_df['Frequency'], 
+        width= class_width,  # Increase width to reduce gaps
+        color='green',  # Change color to green
+        edgecolor='black', 
+        alpha=0.6
+    )
+    plt.xlabel("Midpoint")
+    plt.ylabel("Frequency")
+    plt.title("Histogram of Grouped Data")
+    plt.show()
+    
+groupedDate, frequency, midpoint = group_data(get_user_data(), 5)   
+draw_histogram(groupedDate, 5)
 
 # Main Method
 def Main():
@@ -52,7 +91,7 @@ def Main():
         print("2 - Read Data From A File")
         print("3 - Draw Histogram By Getting Class Width")
         print("4 - Show Statistics")
-        print("5 - Save")
+        print("5 - Save To CSV File")
         print("0 - Exit")
         choice = input("Enter Your Choice: ")
 

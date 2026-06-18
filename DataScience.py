@@ -1,5 +1,5 @@
 '''
-Practical
+Practical Programming Assignment
 Name: Chinkhuslen Khishignemekh
 
 '''
