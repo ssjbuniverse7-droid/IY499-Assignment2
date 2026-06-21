@@ -1,7 +1,7 @@
 # IY499 Practical Programming Assignment
 ## Student ID: P507916 
 ## Student Name: Chinkhuslen Khishignemekh
-
+## GitHUb Link: https://github.com/ssjbuniverse7-droid/IY499-Assignment2
 
 *I confirm that this assignment is my own work.*
 *Where I have referred to online sources, I have provided comments detailing the reference and included a link to the source.*
