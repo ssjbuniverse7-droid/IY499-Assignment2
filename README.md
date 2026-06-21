@@ -1,16 +1,16 @@
 # IY499 Practical Programming Assignment
 ## Student ID: P507916 
 ## Student Name: Chinkhuslen Khishignemekh
-## GitHUb Link: https://github.com/ssjbuniverse7-droid/IY499-Assignment2
+## GitHub Link: https://github.com/ssjbuniverse7-droid/IY499-Assignment2
 
 *I confirm that this assignment is my own work.*
 *Where I have referred to online sources, I have provided comments detailing the reference and included a link to the source.*
 
 ## Libraries Used
-1. **pandas**  
-2. **numpy**  
-3. **matplotlib**  
-4. **statistics (Python built-in module)**
+1. **Pandas**  
+2. **NumPy**  
+3. **Matplotlib**  
+4. **Statistics (Python built-in module)**
 
 ## Program Description 
 This Python program allows users to enter and analyse continuous numerical data through a simple menu-driven interface. Users can input a dataset manually, assign a column name, and save the raw data to a CSV file for later use. Previously saved datasets can also be loaded from the CSV file for further analysis.
@@ -20,7 +20,7 @@ The program groups the numerical data into user-defined class intervals and gene
 The program is intended as a simple data analysis tool that demonstrates the use of Python, Pandas, NumPy, and Matplotlib for processing, analysing, and visualizing continuous numerical data.
 
 ## Installation and Execution Instructions
-### Intallation Instructions
+### Installation Instructions
 1. Install Python 3 if it is not already installed.
 2. Install the required libraries by running the following command in a terminal or command prompt:  
 pip install pandas numpy matplotlib
