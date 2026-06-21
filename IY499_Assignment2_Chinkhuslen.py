@@ -1,7 +1,7 @@
 '''
-Practical Programming Assignment
+IY499 Practical Programming Assignment
 Name: Chinkhuslen Khishignemekh
-
+Student ID: P507916
 '''
 
 import pandas as pd
@@ -28,12 +28,11 @@ def get_data():
     df = pd.DataFrame(data, columns=[colName])
 
     # Step 3: Save The DataFrame To A CSV File
-    df.to_csv("raw_data.csv", index=False)
-
     # Check if list is empty
     if len(data) == 0:
         print("\nNo data entered.")
     else:
+        df.to_csv("raw_data.csv", index=False)
         print("\nData saved to 'raw_data.csv'.")
 
     return data
@@ -61,22 +60,19 @@ def read_data():
     return df.iloc[:, 0].tolist()  # Return the column as a list
 
 def group_data(data, class_width):
+    # Check for empty list
     if len(data) == 0:
         print("No data available.")
         return None, None, None
-    
+    # Group the data
     min_val, max_val = min(data), max(data)
-
     bins = np.arange(min_val, max_val + class_width, class_width)
     if bins[-1] < max_val:
         bins = np.append(bins, bins[-1] + class_width)
-
     frequency, bin_edges = np.histogram(data, bins=bins)
-    
     midpoints = [(bin_edges[i] + bin_edges[i+1]) / 2 for i in range(len(bin_edges)-1)]
-
     freq_times_mid = [frequency[i] * midpoints[i] for i in range(len(frequency))]
-    
+    # Create DataFrame
     grouped_df = pd.DataFrame({
         'Classes': [f'{bin_edges[i]} - {bin_edges[i+1]}' for i in range(len(bin_edges)-1)],
         'Frequency': frequency,
@@ -87,6 +83,7 @@ def group_data(data, class_width):
     return grouped_df, frequency, midpoints
 
 def draw_histogram(grouped_df, class_width):
+    # Draw histogram
     plt.bar(
         grouped_df['Midpoint'], 
         grouped_df['Frequency'], 
@@ -108,9 +105,8 @@ def compute_statistics(data, grouped_df, frequency, midpoints):
     variance = np.var(data, ddof=1)
     std_dev = np.std(data, ddof=1)
     grouped_mean = np.sum(frequency * np.array(midpoints)) / np.sum(frequency)
-
     grouped_df["Cumulative Frequency"] = grouped_df["Frequency"].cumsum()
-
+    # Create DataFrame
     stats_df = pd.DataFrame({
         "Statistic": [
             "Mean",
